@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Post Detail - 100 Days of Manual Testing</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">100 Days of Manual Testing</div>
+            <nav>
+                <a href="index.html">Home</a>
+                <a href="categories.html">Categories</a>
+                <a href="#about">About</a>
+            </nav>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Search knowledge...">
+                <button class="theme-toggle">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <main class="post-detail-container">
+        <div class="post-main-content">
+            <article id="post-article">
+                <!-- Content will be loaded by JavaScript -->
+                <div class="loading-spinner-container">
+                    <div class="spinner"></div>
+                    <div class="loading-text">Loading post content...</div>
+                </div>
+            </article>
+
+
+        </div>
+
+        <aside class="post-sidebar">
+            <div class="sidebar-widget">
+                <h4>Related Days</h4>
+                <div id="related-posts">
+                    <!-- Related posts will be loaded by JavaScript -->
+                </div>
+                <a href="index.html" class="view-all-btn">VIEW ALL DAYS</a>
+            </div>
+
+
+        </aside>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#linkedin">LinkedIn</a>
+                <a href="#github">GitHub</a>
+            </div>
+            <p>&copy; 2024 The Manual Authority. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Post detail specific logic
+        document.addEventListener('DOMContentLoaded', async () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = parseInt(urlParams.get('id')) || 45; // Default to 45 for demo
+            
+            // If data is already loaded
+            if (window.posts && window.posts.length > 0) {
+                await window.loadPostDetail(postId);
+            } else {
+                // Wait for custom event from script.js
+                document.addEventListener('dataReady', async () => {
+                    await window.loadPostDetail(postId);
+                });
+                
+                // Fallback: poll for a short time
+                let attempts = 0;
+                const poll = setInterval(async () => {
+                    if (window.posts && window.posts.length > 0) {
+                        clearInterval(poll);
+                        await window.loadPostDetail(postId);
+                    }
+                    if (++attempts > 50) clearInterval(poll);
+                }, 100);
+            }
+        });
+    </script>
+</body>
+</html>

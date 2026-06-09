@@ -1,0 +1,555 @@
+{
+    "posts": [
+        {
+            "id": 50,
+            "file": "050.json",
+            "day": "Day 50",
+            "title": "Cucumber & Step Definitions – Khi Phép Màu Xảy Ra",
+            "category": "BDD & Cucumber",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 49,
+            "file": "049.json",
+            "day": "Day 49",
+            "title": "BDD Anti-patterns – Đừng Để BDD Trở Thành Gánh Nặng",
+            "category": "BDD & Cucumber",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 48,
+            "file": "048.json",
+            "day": "Day 48",
+            "title": "Scenario Outline – Đừng Lặp Lại Chính Mình (DRY)",
+            "category": "BDD & Cucumber",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 47,
+            "file": "047.json",
+            "day": "Day 47",
+            "title": "Gherkin Syntax – Viết Kịch Bản Như Viết Văn",
+            "category": "BDD & Cucumber",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 46,
+            "file": "046.json",
+            "day": "Day 46",
+            "title": "BDD – Khi Tester, Dev và PO Nói Cùng Một Ngôn Ngữ",
+            "category": "BDD & Cucumber",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 45,
+            "file": "045.json",
+            "day": "Day 45",
+            "title": "Sprint Review & Retrospective – Cải Tiến Chất Lượng Sau Mỗi Kỳ Sprint",
+            "category": "Agile Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 44,
+            "file": "044.json",
+            "day": "Day 44",
+            "title": "Sprint Planning & Daily Standup – Tester Làm Gì Trong Các Buổi Họp?",
+            "category": "Agile Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 43,
+            "file": "043.json",
+            "day": "Day 43",
+            "title": "User Stories & Acceptance Criteria – Hiểu Để Test Đúng",
+            "category": "Agile Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 42,
+            "file": "042.json",
+            "day": "Day 42",
+            "title": "Scrum Framework for Testers – Vai Trò Của Tester Trong Nhóm Scrum",
+            "category": "Agile Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 41,
+            "file": "041.json",
+            "day": "Day 41",
+            "title": "Introduction to Agile Testing – Tư Duy Kiểm Thử Linh Hoạt",
+            "category": "Agile Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 40,
+            "file": "040.json",
+            "day": "Day 40",
+            "title": "Test Reporting & Metrics – Đo Lường Chất Lượng Sản Phẩm",
+            "category": "Test Management",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 39,
+            "file": "039.json",
+            "day": "Day 39",
+            "title": "Risk Management – Xác Định & Quản Lý Rủi Ro",
+            "category": "Test Management",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 38,
+            "file": "038.json",
+            "day": "Day 38",
+            "title": "Test Estimation – Kỹ Thuật Ước Lượng Thời Gian & Nguồn Lực",
+            "category": "Test Management",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 37,
+            "file": "037.json",
+            "day": "Day 37",
+            "title": "Test Strategy – Xây Dựng Chiến Lược Kiểm Thử Tổng Thể",
+            "category": "Test Management",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 36,
+            "file": "036.json",
+            "day": "Day 36",
+            "title": "Test Planning – Cách Lập Kế Hoạch Kiểm Thử Hiệu Quả",
+            "category": "Test Management",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 35,
+            "file": "035.json",
+            "day": "Day 35",
+            "title": "API Automation Testing – Nhanh Hơn, Ổn Định Hơn",
+            "category": "Automation Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 34,
+            "file": "034.json",
+            "day": "Day 34",
+            "title": "GitHub Actions – Công Cụ CI/CD Ngay Trong Tầm Tay",
+            "category": "DevOps & CI/CD",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 33,
+            "file": "033.json",
+            "day": "Day 33",
+            "title": "CI/CD for Testers – Tự Động Hóa Quy Trình Triển Khai",
+            "category": "DevOps & CI/CD",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 32,
+            "file": "032.json",
+            "day": "Day 32",
+            "title": "Test Frameworks: Pytest & TestNG – Quản Lý Bài Test Hiệu Quả",
+            "category": "Automation Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 31,
+            "file": "031.json",
+            "day": "Day 31",
+            "title": "Page Object Model (POM) – Tổ Chức Code Automation Chuyên Nghiệp",
+            "category": "Automation Testing",
+            "author": "Manus AI",
+            "image": null
+        },
+        {
+            "id": 30,
+            "file": "030.json",
+            "day": "Day 30",
+            "title": "Selenium & WebDriver – Công Cụ Tự Động Hóa Web Phổ Biến Nhất",
+            "category": "Automation Testing",
+            "author": "Manus AI",
+            "image": null
+        },
+        {
+            "id": 29,
+            "file": "029.json",
+            "day": "Day 29",
+            "title": "Automation Testing Introduction – Khi Máy Móc Thay Thế Con Người",
+            "category": "Automation Testing",
+            "author": "Manus AI",
+            "image": null
+        },
+        {
+            "id": 28,
+            "file": "028.json",
+            "day": "Day 28",
+            "title": "Broken Authentication – Khi Cửa Nhà Không Khóa Kỹ",
+            "category": "Security Testing",
+            "author": "Manus AI",
+            "image": null
+        },
+        {
+            "id": 27,
+            "file": "027.json",
+            "day": "Day 27",
+            "title": "Cross-Site Scripting (XSS) – Lỗ Hổng Phổ Biến Nhất Trên Web",
+            "category": "Security Testing",
+            "author": "Manus AI",
+            "image": null
+        },
+        {
+            "id": 26,
+            "file": "026.json",
+            "day": "Day 26",
+            "title": "Security Testing Basics – Bảo Vệ Ứng Dụng Khỏi Các Mối Đe Dọa",
+            "category": "Security Testing",
+            "author": "Manus AI",
+            "image": null
+        },
+        {
+            "id": 25,
+            "file": "025.json",
+            "day": "Day 25",
+            "title": "Performance Testing Basics – Đảm Bảo Ứng Dụng Nhanh và Ổn Định",
+            "category": "Performance & Load",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 24,
+            "file": "024.json",
+            "day": "Day 24",
+            "title": "Database Testing: Beyond SQL Queries – Kiểm Tra Sâu Hơn",
+            "category": "SQL & Data",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 23,
+            "file": "023.json",
+            "day": "Day 23",
+            "title": "SQL for Testers – Kiểm Tra Dữ Liệu Trong Database",
+            "category": "SQL & Data",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 22,
+            "file": "022.json",
+            "day": "Day 22",
+            "title": "Thực hành API Testing với Postman – Nắm Vững Công Cụ Vàng",
+            "category": "API Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 21,
+            "file": "021.json",
+            "day": "Day 21",
+            "title": "API Testing Fundamentals – Kiểm Tra Trái Tim Của Ứng Dụng",
+            "category": "API Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 20,
+            "file": "020.json",
+            "day": "Day 20",
+            "title": "Mobile Testing Basics – Thách Thức Đặc Thù Của Ứng Dụng Di Động",
+            "category": "Mobile Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 19,
+            "file": "019.json",
+            "day": "Day 19",
+            "title": "UX Testing & Accessibility – Sản Phẩm Cho Mọi Người Dùng",
+            "category": "UI Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 18,
+            "file": "018.json",
+            "day": "Day 18",
+            "title": "UI Testing – Kiểm Tra Giao Diện Người Dùng",
+            "category": "UI Testing",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 17,
+            "file": "017.json",
+            "day": "Day 17",
+            "title": "Error Guessing & Anti-patterns – Mẹo 'Bắt Bug' Từ Kinh Nghiệm",
+            "category": "TEST DESIGN",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 16,
+            "file": "016.json",
+            "day": "Day 16",
+            "title": "Exploratory Testing – Khi Không Có Test Case",
+            "category": "TEST DESIGN",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 15,
+            "file": "015.json",
+            "day": "Day 15",
+            "title": "Use Case Testing – Nhìn Từ Mắt Người Dùng",
+            "category": "TEST DESIGN",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 14,
+            "file": "014.json",
+            "day": "Day 14",
+            "title": "State Transition – Khi Hệ Thống Có 'Nhớ'",
+            "category": "TEST DESIGN",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 13,
+            "file": "013.json",
+            "day": "Day 13",
+            "title": "Decision Table – Khi Nhiều Điều Kiện Kết Hợp Với Nhau",
+            "category": "TEST DESIGN",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 12,
+            "file": "012.json",
+            "day": "Day 12",
+            "title": "Boundary Value Analysis – Nơi Bug Ẩn Nấp Nhiều Nhất",
+            "category": "TEST DESIGN",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 11,
+            "file": "011.json",
+            "day": "Day 11",
+            "title": "Equivalence Partitioning – Giảm Test Case Mà Vẫn Chất",
+            "category": "TEST DESIGN",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 10,
+            "file": "010.json",
+            "day": "Day 10",
+            "title": "Regression Testing – Sửa 1 Lỗi Sinh 10 Lỗi",
+            "category": "REGRESSION",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 9,
+            "file": "009.json",
+            "day": "Day 09",
+            "title": "Smoke Test vs Sanity Test",
+            "category": "TEST TYPES",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 8,
+            "file": "008.json",
+            "day": "Day 08",
+            "title": "Các Mức Độ Test: Unit, Integration, System, Acceptance",
+            "category": "TEST LEVELS",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 7,
+            "file": "007.json",
+            "day": "Day 07",
+            "title": "Bug Lifecycle: Từ New Đến Closed",
+            "category": "BUG MANAGEMENT",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 6,
+            "file": "006.json",
+            "day": "Day 06",
+            "title": "Test Suite & Tổ Chức Theo Module",
+            "category": "TEST MANAGEMENT",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 5,
+            "file": "005.json",
+            "day": "Day 05",
+            "title": "Test Case Cơ Bản & Happy vs Unhappy Path",
+            "category": "TEST DESIGN",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 4,
+            "file": "004.json",
+            "day": "Day 04",
+            "title": "Black/White/Grey-box & Đọc Requirements",
+            "category": "TECHNIQUES",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 3,
+            "file": "003.json",
+            "day": "Day 03",
+            "title": "Static vs Dynamic Testing",
+            "category": "STATIC",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 2,
+            "file": "002.json",
+            "day": "Day 02",
+            "title": "V-Model & Verification vs Validation",
+            "category": "SDLC",
+            "author": "The Manual Authority",
+            "image": null
+        },
+        {
+            "id": 1,
+            "file": "001.json",
+            "day": "Day 01",
+            "title": "Manual Testing & The Cost of Bugs",
+            "category": "FUNDAMENTALS",
+            "author": "The Manual Authority",
+            "image": null
+        }
+    ],
+    "categories": [
+        "All Topics",
+        "UI Testing",
+        "API Testing",
+        "SDLC",
+        "Mobile Testing",
+        "Tools",
+        "Best Practices",
+        "Fundamentals",
+        "Agile Testing",
+        "Automation Testing",
+        "BDD & Cucumber",
+        "BUG MANAGEMENT",
+        "DevOps & CI/CD",
+        "Performance & Load",
+        "REGRESSION",
+        "SQL & Data",
+        "STATIC",
+        "Security Testing",
+        "TECHNIQUES",
+        "TEST DESIGN",
+        "TEST LEVELS",
+        "TEST MANAGEMENT",
+        "TEST TYPES"
+    ],
+    "categoryDetails": [
+        {
+            "id": "sdlc-models",
+            "title": "SDLC & Models",
+            "description": "Understanding Software Development Life Cycle models like Waterfall, Agile, and V-Model for better test planning.",
+            "lessons": 14,
+            "icon": "🔄",
+            "color": "#8b5cf6",
+            "featured": true
+        },
+        {
+            "id": "ui-ux",
+            "title": "UI & UX Testing",
+            "description": "Master the art of visual validation, accessibility standards, and intuitive navigation flows across diverse screen resolutions.",
+            "lessons": 24,
+            "icon": "💻",
+            "color": "#0052cc",
+            "featured": false
+        },
+        {
+            "id": "api-integration",
+            "title": "API & Integration",
+            "description": "Verifying data integrity between services without a graphical interface.",
+            "lessons": 20,
+            "icon": "⚙️",
+            "color": "#10b981",
+            "featured": false
+        },
+        {
+            "id": "mobile-apps",
+            "title": "Mobile Apps",
+            "description": "Android and iOS specific testing challenges, including interrupts and low battery conditions.",
+            "lessons": 12,
+            "icon": "📱",
+            "color": "#3b82f6",
+            "featured": false
+        },
+        {
+            "id": "sql-data",
+            "title": "SQL & Data",
+            "description": "Verifying back-end operations, schema changes, and complex data migrations.",
+            "lessons": 11,
+            "icon": "🗄️",
+            "color": "#6b7280",
+            "featured": false
+        },
+        {
+            "id": "soft-skills",
+            "title": "Soft Skills",
+            "description": "Communication, bug reporting, and stakeholder management for high-impact testers.",
+            "lessons": 15,
+            "icon": "🤝",
+            "color": "#2563eb",
+            "featured": false,
+            "highlight": true
+        },
+        {
+            "id": "performance-load",
+            "title": "Performance & Load",
+            "description": "Simulating high-traffic scenarios and identifying bottleneck thresholds before they affect the end-user experience.",
+            "lessons": 12,
+            "icon": "🚀",
+            "color": "#ef4444",
+            "featured": false,
+            "isWide": true,
+            "badge": "ADVANCED THEORY",
+            "stats": "4.5 Hours Content"
+        }
+    ],
+    "specializedDomains": [
+        "Security Basics",
+        "Accessibility",
+        "Compliance",
+        "Browser Tools",
+        "Network Logs"
+    ]
+}

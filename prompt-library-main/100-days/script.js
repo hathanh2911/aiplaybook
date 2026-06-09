@@ -1,0 +1,465 @@
+// Configuration
+const CONFIG = {
+    postsPerPage: 6,
+    enableSearch: true,
+    enableFiltering: true,
+    enableThemeToggle: true,
+    readOnlyMode: true,
+    dataPath: 'data/'
+};
+
+// Global state
+let posts = [];
+let categories = [];
+let categoryDetails = [];
+let specializedDomains = [];
+
+let currentPage = 1;
+let filteredPosts = [];
+let selectedCategory = "All Topics";
+let searchQuery = "";
+
+// Initialize
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadDataFromJSON();
+    initializeApp();
+});
+
+// Load data from JSON files
+async function loadDataFromJSON() {
+    const mainLoading = document.getElementById('main-loading');
+    if (mainLoading) mainLoading.style.display = 'flex';
+    
+    try {
+        // Load index.json to get metadata and list of posts
+        const response = await fetch(`${CONFIG.dataPath}index.json`);
+        const indexData = await response.json();
+        
+        // Set categories and other metadata
+        categories = indexData.categories || [];
+        categoryDetails = indexData.categoryDetails || [];
+        specializedDomains = indexData.specializedDomains || [];
+        
+        // Update window object for immediate access by other scripts
+        window.categories = categories;
+        window.categoryDetails = categoryDetails;
+        window.specializedDomains = specializedDomains;
+        
+        // Store post metadata and initialize empty posts array
+        const postMetadata = indexData.posts || [];
+        
+        // Initially, we only need the metadata to render the grid
+        posts = postMetadata.map(meta => ({
+            ...meta,
+            isLoaded: false
+        }));
+        
+        // Sort posts by id (descending - newest first)
+        posts.sort((a, b) => b.id - a.id);
+        window.posts = posts;
+        
+        // Auto-update categoryDetails with actual post counts
+        updateCategoryDetailsWithPostCounts();
+        
+        if (mainLoading) mainLoading.style.display = 'none';
+        
+        // Trigger custom event that data is ready
+        document.dispatchEvent(new CustomEvent('dataReady'));
+        
+    } catch (error) {
+        if (mainLoading) mainLoading.style.display = 'none';
+        console.error('Failed to load data from JSON:', error);
+        // Fallback to empty data
+        categories = ["All Topics"];
+        window.categories = categories;
+        posts = [];
+        window.posts = posts;
+    }
+}
+
+// Auto-update categoryDetails with actual post counts from posts
+function updateCategoryDetailsWithPostCounts() {
+    // Count posts by category (normalize category names to lowercase for matching)
+    const categoryCounts = {};
+    posts.forEach(post => {
+        const cat = post.category;
+        if (cat) {
+            // Store both the original and normalized version
+            const normalized = cat.toLowerCase();
+            if (!categoryCounts[normalized]) {
+                categoryCounts[normalized] = {
+                    count: 0,
+                    originalName: cat
+                };
+            }
+            categoryCounts[normalized].count++;
+        }
+    });
+    
+    // Update categoryDetails with actual counts
+    categoryDetails.forEach(catDetail => {
+        const titleLower = catDetail.title.toLowerCase();
+        
+        // Find matching category count
+        for (let normalized in categoryCounts) {
+            // Check if the category detail title matches the post category
+            if (normalized === titleLower || 
+                titleLower.includes(normalized) ||
+                normalized.includes(titleLower)) {
+                catDetail.lessons = categoryCounts[normalized].count;
+                break;
+            }
+        }
+    });
+    
+    // Add any categories from posts that don't have categoryDetails entry
+    for (let normalized in categoryCounts) {
+        const originalName = categoryCounts[normalized].originalName;
+        const exists = categoryDetails.some(cd => 
+            cd.title.toLowerCase() === normalized ||
+            normalized.includes(cd.title.toLowerCase()) ||
+            cd.title.toLowerCase().includes(normalized)
+        );
+        
+        if (!exists) {
+            // Create a new category detail entry for this category
+            categoryDetails.push({
+                id: normalized.replace(/\s+/g, '-'),
+                title: originalName,
+                description: `Explore ${originalName} testing topics and best practices.`,
+                lessons: categoryCounts[normalized].count,
+                icon: '📚',
+                color: '#0052cc',
+                featured: false
+            });
+        }
+    }
+    
+    // Update window object
+    window.categoryDetails = categoryDetails;
+}
+
+// Lazy load full post data if not already loaded
+async function ensurePostLoaded(post) {
+    if (post.isLoaded) return post;
+    
+    try {
+        const postResponse = await fetch(`${CONFIG.dataPath}${post.file}`);
+        const fullData = await postResponse.json();
+        
+        // Update the post object in the global array
+        const index = posts.findIndex(p => p.id === post.id);
+        if (index !== -1) {
+            posts[index] = { ...fullData, isLoaded: true };
+            window.posts = posts;
+            return posts[index];
+        }
+    } catch (error) {
+        console.warn(`Failed to load post file: ${post.file}`, error);
+    }
+    return post;
+}
+
+function initializeApp() {
+    // Check for category in URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const categoryParam = urlParams.get('category');
+    if (categoryParam) {
+        selectedCategory = categoryParam;
+    }
+
+    renderFilterTags();
+    filterAndRenderPosts();
+    setupEventListeners();
+    setupThemeToggle();
+}
+
+function setupEventListeners() {
+    if (CONFIG.enableSearch) {
+        const searchInput = document.querySelector('.search-input');
+        if (searchInput) {
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.toLowerCase();
+                currentPage = 1;
+                filterAndRenderPosts();
+            });
+        }
+    }
+
+    const loadMoreBtn = document.querySelector('.btn-load-more');
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', () => {
+            currentPage++;
+            renderPosts(true);
+        });
+    }
+}
+
+function setupThemeToggle() {
+    if (!CONFIG.enableThemeToggle) return;
+
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (!themeToggle) return;
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    applyTheme(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+        const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+        applyTheme(newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+}
+
+function applyTheme(theme) {
+    document.documentElement.setAttribute('data-theme', theme);
+    const themeToggle = document.querySelector('.theme-toggle');
+    if (themeToggle) {
+        themeToggle.textContent = theme === 'light' ? '🌙' : '☀️';
+    }
+}
+
+function renderFilterTags() {
+    if (!CONFIG.enableFiltering) return;
+
+    const filterContainer = document.querySelector('.filter-tags');
+    if (!filterContainer) return;
+
+    filterContainer.innerHTML = '';
+    categories.forEach(category => {
+        const tag = document.createElement('button');
+        tag.className = `tag ${category === selectedCategory ? 'active' : ''}`;
+        tag.textContent = category;
+        tag.addEventListener('click', () => {
+            selectedCategory = category;
+            currentPage = 1;
+            document.querySelectorAll('.tag').forEach(t => t.classList.remove('active'));
+            tag.classList.add('active');
+            filterAndRenderPosts();
+        });
+        filterContainer.appendChild(tag);
+    });
+}
+
+function filterAndRenderPosts() {
+    filteredPosts = posts.filter(post => {
+        const matchesCategory = selectedCategory === "All Topics" || 
+                               post.category.toLowerCase().includes(selectedCategory.toLowerCase());
+        const matchesSearch = searchQuery === "" || 
+                             post.title.toLowerCase().includes(searchQuery) ||
+                             (post.excerpt && post.excerpt.toLowerCase().includes(searchQuery));
+        return matchesCategory && matchesSearch;
+    });
+    currentPage = 1;
+    renderPosts();
+}
+
+async function renderPosts(append = false) {
+    const postsGrid = document.querySelector('.posts-grid');
+    if (!postsGrid) return;
+
+    const startIndex = (currentPage - 1) * CONFIG.postsPerPage;
+    const endIndex = startIndex + CONFIG.postsPerPage;
+    const postsToShow = filteredPosts.slice(startIndex, endIndex);
+
+    if (!append) {
+        postsGrid.innerHTML = '';
+    }
+
+    // Create skeleton cards for posts that are not yet loaded
+    const cards = postsToShow.map(post => {
+        const card = createPostCard(post);
+        postsGrid.appendChild(card);
+        return { post, card };
+    });
+
+    // Load each post and update its card when ready
+    cards.forEach(async ({ post, card }) => {
+        if (!post.isLoaded) {
+            const fullData = await ensurePostLoaded(post);
+            const newCard = createPostCard(fullData);
+            card.replaceWith(newCard);
+        }
+    });
+
+    updateLoadMoreButton();
+}
+
+function createPostCard(post) {
+    const card = document.createElement('div');
+    card.className = 'post-card';
+    
+    if (!post.isLoaded) {
+        card.classList.add('loading');
+        card.innerHTML = `
+            <div class="post-image skeleton skeleton-image"></div>
+            <div class="post-content">
+                <div class="skeleton skeleton-text" style="width: 30%;"></div>
+                <div class="skeleton skeleton-text" style="width: 20%; height: 0.8rem;"></div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="skeleton skeleton-text"></div>
+                <div class="post-footer">
+                    <div style="width: 100%;">
+                        <div class="skeleton skeleton-text" style="width: 40%;"></div>
+                        <div class="skeleton skeleton-text" style="width: 30%; height: 0.6rem;"></div>
+                    </div>
+                </div>
+            </div>
+        `;
+        return card;
+    }
+
+    card.addEventListener('click', () => {
+        navigateToPost(post.id);
+    });
+
+    const imageClass = post.image ? '' : 'no-image';
+    const imageHTML = post.image 
+        ? `<img src="${post.image}" alt="${post.title}">`
+        : `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; font-size: 3rem;">📋</div>`;
+
+    card.innerHTML = `
+        <div class="post-image ${imageClass}">
+            ${imageHTML}
+        </div>
+        <div class="post-content">
+            <div class="post-day">${post.day}</div>
+            <div class="post-category">${post.category}</div>
+            <h3 class="post-title">${post.title}</h3>
+            <p class="post-excerpt">${post.excerpt || ''}</p>
+            <div class="post-footer">
+                <div>
+                    <div class="post-author">${post.author}</div>
+                    <div class="post-source">${post.source || 'Manual Authority'}</div>
+                </div>
+                <div class="post-arrow">→</div>
+            </div>
+        </div>
+    `;
+
+    return card;
+}
+
+function updateLoadMoreButton() {
+    const loadMoreBtn = document.querySelector('.btn-load-more');
+    if (!loadMoreBtn) return;
+
+    const totalPages = Math.ceil(filteredPosts.length / CONFIG.postsPerPage);
+    if (currentPage >= totalPages) {
+        loadMoreBtn.style.display = 'none';
+    } else {
+        loadMoreBtn.style.display = 'inline-block';
+    }
+}
+
+function navigateToPost(postId) {
+    window.location.href = `detail.html?id=${postId}`;
+}
+
+// Export for other scripts
+window.loadPostDetail = loadPostDetail;
+
+// Load post detail
+async function loadPostDetail(id) {
+    // Try to find post in already loaded posts
+    let post = posts.find(p => p.id === id);
+    
+    if (post) {
+        post = await ensurePostLoaded(post);
+    } else {
+        // If not found in the list, try to load it directly
+        try {
+            const paddedId = String(id).padStart(3, '0');
+            const response = await fetch(`${CONFIG.dataPath}${paddedId}.json`);
+            post = await response.json();
+        } catch (error) {
+            console.error(`Failed to load post ${id}:`, error);
+        }
+    }
+
+    if (!post) {
+        document.getElementById('post-article').innerHTML = '<h1>Post not found</h1><a href="index.html">Return to Home</a>';
+        return;
+    }
+
+    // Update Page Title
+    document.title = `${post.title} - 100 Days of Manual Testing`;
+
+    // Render Post Content
+    const article = document.getElementById('post-article');
+    article.innerHTML = `
+        <div class="post-header">
+            <div class="post-day">${post.day}</div>
+            <h1>${post.title}</h1>
+            <div class="author-meta">
+                <div class="author-avatar">
+                    <img src="https://ui-avatars.com/api/?name=${encodeURIComponent(post.author)}&background=0052cc&color=fff" alt="${post.author}">
+                </div>
+                <div class="author-info">
+                    <div class="name">By: ${post.author}</div>
+                    <div class="role-date">${post.authorRole || 'Contributor'} • ${post.date || 'Recently'}</div>
+                </div>
+            </div>
+        </div>
+        
+        ${post.image ? `
+        <div class="post-featured-image">
+            <img src="${post.image}" alt="${post.title}">
+        </div>
+        ` : ''}
+
+        <div class="post-body">
+            ${post.content || `<p>${post.excerpt}</p><p>Full content coming soon...</p>`}
+        </div>
+    `;
+
+    // Render Navigation
+    renderPostNavigation(id);
+}
+
+function renderPostNavigation(currentId) {
+    // Sort posts by ID ascending to get correct sequence
+    const sortedPosts = [...posts].sort((a, b) => a.id - b.id);
+    const currentIndex = sortedPosts.findIndex(p => p.id === currentId);
+    
+    if (currentIndex === -1) return;
+    
+    const prevPost = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+    const nextPost = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+    
+    const navContainer = document.createElement('div');
+    navContainer.className = 'post-navigation';
+    
+    navContainer.innerHTML = `
+        <div class="nav-item prev ${!prevPost ? 'disabled' : ''}" onclick="${prevPost ? `window.location.href='detail.html?id=${prevPost.id}'` : ''}">
+            ${prevPost ? `
+                <span class="nav-label">← PREVIOUS</span>
+                <span class="nav-title">${prevPost.title}</span>
+            ` : ''}
+        </div>
+        <div class="nav-item next ${!nextPost ? 'disabled' : ''}" onclick="${nextPost ? `window.location.href='detail.html?id=${nextPost.id}'` : ''}">
+            ${nextPost ? `
+                <span class="nav-label">NEXT →</span>
+                <span class="nav-title">${nextPost.title}</span>
+            ` : ''}
+        </div>
+    `;
+    
+    const article = document.getElementById('post-article');
+    article.appendChild(navContainer);
+}
+
+// Navigation links
+const navLinks = document.querySelectorAll('nav a');
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && !href.startsWith('#')) {
+            e.preventDefault();
+            window.location.href = href;
+        }
+    });
+});
+                
